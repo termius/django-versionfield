@@ -21,33 +21,33 @@ class VersionFieldTest(TestCase):
 
     def test_get_by_exact_version(self):
         thing = DummyModel.objects.get(version="0.1")
-        self.assertEqual(thing.version,"0.1")
-        self.assertEqual(thing.version,"0.1.0")
+        self.assertEqual(thing.version, "0.1")
+        self.assertEqual(thing.version, "0.1.0")
 
     def test_filter_by_greater_than_version(self):
         things = DummyModel.objects.filter(version__gt="0.1")
-        self.assertEqual(len(things),2)
+        self.assertEqual(len(things), 2)
 
         things = DummyModel.objects.filter(version__gt="1.0")
-        self.assertEqual(len(things),1)
+        self.assertEqual(len(things), 1)
 
         things = DummyModel.objects.filter(version__gt="1.0.1")
-        self.assertEqual(len(things),0)
+        self.assertEqual(len(things), 0)
 
     def test_filter_by_less_than_version(self):
         things = DummyModel.objects.filter(version__lt="0.1")
-        self.assertEqual(len(things),0)
+        self.assertEqual(len(things), 0)
 
         things = DummyModel.objects.filter(version__lt="1.0")
-        self.assertEqual(len(things),1)
+        self.assertEqual(len(things), 1)
 
         things = DummyModel.objects.filter(version__lt="1.0.1")
-        self.assertEqual(len(things),2)
+        self.assertEqual(len(things), 2)
 
     def test_overflow_number(self):
         error_occured = False
         try:
-            overflow = DummyModel.objects.create(version="1.999.1")
+            DummyModel.objects.create(version="1.999.1")
         except ValueError:
             error_occured = True
         self.assertTrue(error_occured)
