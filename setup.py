@@ -8,18 +8,16 @@ except ImportError:
     ez_setup.use_setuptools()
     from setuptools import setup, find_packages
 
-import os
-
 setup(
-    name = "django-versionfield2",
-    version = "0.3.3",
-    url = 'https://github.com/tonioo/django-versionfield',
-    license = 'BSD',
-    description = "A DB Independent Custom Django Field for storing Version numbers for fast indexing",
-    author = 'Tom Hoddes',
-    packages = find_packages(),
-    include_package_data = True,
-    classifiers = [
+    name="django-versionfield2",
+    version="0.3.3",
+    url='https://github.com/tonioo/django-versionfield',
+    license='BSD',
+    description="A DB Independent Custom Django Field for storing Version numbers for fast indexing",
+    author='Tom Hoddes',
+    packages=find_packages(),
+    include_package_data=True,
+    classifiers=[
         'Development Status :: 3 - Alpha',
         'Framework :: Django',
         'Intended Audience :: Developers',

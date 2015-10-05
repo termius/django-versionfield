@@ -18,10 +18,10 @@ def convert_version_string_to_int(string, number_bits):
             .format(len(number_bits) - 1)
         )
 
-    #add 0s for missing numbers
+    # add 0s for missing numbers
     numbers.extend([0] * (len(number_bits) - len(numbers)))
 
-    #convert to single int and return
+    # convert to single int and return
     number = 0
     total_bits = 0
     for num, bits in reversed(zip(numbers, number_bits)):
@@ -41,7 +41,7 @@ def convert_version_int_to_string(number, number_bits):
     """
     Take in a verison string e.g. '3.0.1'
     Store it as a converted int:
-    3 * ( 2**number_bits[0]) + 0 * (2**number_bits[1]) + 1 * (2**number_bits[2])
+    3 * (2**number_bits[0]) + 0 * (2**number_bits[1]) + 1 * (2**number_bits[2])
 
     >>> convert_version_int_to_string(50331649,[8,8,16])
     '3.0.1'

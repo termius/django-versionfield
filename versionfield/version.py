@@ -12,8 +12,8 @@ class Version(object):
             string, number_bits)
 
     def __unicode__(self):
-        return unicode(
-            convert_version_int_to_string(self.internal_integer, self.number_bits))
+        return unicode(convert_version_int_to_string(
+                           self.internal_integer, self.number_bits))
 
     def __str__(self):
         return self.__unicode__()
@@ -26,7 +26,7 @@ class Version(object):
 
     def __eq__(self, other):
         if not other:
-            return False # we are obviously a valid Version, but 'other' isn't
+            return False  # we are obviously a valid Version, but 'other' isn't
         if isinstance(other, basestring):
             other = Version(other, self.number_bits)
         return int(self) == int(other)
