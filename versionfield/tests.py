@@ -3,9 +3,9 @@ import unittest
 from django.test import TestCase
 from django.db import models
 
-from .. import VersionField
-from ..constants import DEFAULT_NUMBER_BITS
-from ..version import Version
+from . import VersionField
+from .constants import DEFAULT_NUMBER_BITS
+from .version import Version
 
 
 class DummyModel(models.Model):
