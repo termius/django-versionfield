@@ -1,6 +1,9 @@
 """Conversion functions."""
 
 
+import six
+
+
 def convert_version_string_to_int(string, number_bits):
     """
     Take in a verison string e.g. '3.0.1'
@@ -24,7 +27,7 @@ def convert_version_string_to_int(string, number_bits):
     # convert to single int and return
     number = 0
     total_bits = 0
-    for num, bits in reversed(zip(numbers, number_bits)):
+    for num, bits in reversed(list(zip(numbers, number_bits))):
         max_num = (bits + 1) - 1
         if num >= 1 << max_num:
             raise ValueError(
@@ -51,7 +54,7 @@ def convert_version_int_to_string(number, number_bits):
     for bits in number_bits:
         shift_amount = (total_bits - bits)
         number_segment = number >> shift_amount
-        number_strings.append(str(number_segment))
+        number_strings.append(six.text_type(number_segment))
         total_bits = total_bits - bits
         number = number - (number_segment << shift_amount)
     return ".".join(number_strings)

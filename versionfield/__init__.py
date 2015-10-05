@@ -1,4 +1,9 @@
+from __future__ import unicode_literals
+
+import six
+
 from django.db import models
+from django.utils.encoding import python_2_unicode_compatible
 
 from . import forms
 from .constants import DEFAULT_NUMBER_BITS
@@ -6,6 +11,8 @@ from .version import Version
 from .utils import convert_version_int_to_string
 
 
+@python_2_unicode_compatible
+@six.add_metaclass(models.SubfieldBase)
 class VersionField(models.PositiveIntegerField):
 
     """
@@ -15,8 +22,6 @@ class VersionField(models.PositiveIntegerField):
 
     description = "A version number (e.g. 3.0.1)"
 
-    __metaclass__ = models.SubfieldBase
-
     def __init__(self, number_bits=DEFAULT_NUMBER_BITS, *args, **kwargs):
         self.number_bits = number_bits
         super(VersionField, self).__init__(*args, **kwargs)
@@ -25,7 +30,7 @@ class VersionField(models.PositiveIntegerField):
         if isinstance(value, Version):
             return value
 
-        if isinstance(value, basestring):
+        if isinstance(value, six.string_types):
             return Version(value, self.number_bits)
 
         if value is None:
@@ -37,7 +42,7 @@ class VersionField(models.PositiveIntegerField):
         )
 
     def get_prep_value(self, value):
-        if isinstance(value, basestring):
+        if isinstance(value, six.string_types):
             return int(Version(value, self.number_bits))
 
         if value is None:
@@ -53,8 +58,8 @@ class VersionField(models.PositiveIntegerField):
         defaults.update(kwargs)
         return super(VersionField, self).formfield(**defaults)
 
-    def __unicode__(self, value):
-        return unicode(value)
+    def __str__(self, value):
+        return six.text_type(value)
 
 
 try:

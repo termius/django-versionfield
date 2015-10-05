@@ -1,5 +1,7 @@
 """Custom form fields."""
 
+import six
+
 from django import forms
 
 from .version import Version
@@ -22,7 +24,7 @@ class VersionField(forms.IntegerField):
         if not value:
             return None
 
-        if isinstance(value, basestring):
+        if isinstance(value, six.string_types):
             return Version(value, self.number_bits)
 
         return Version(
