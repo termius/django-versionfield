@@ -10,11 +10,12 @@ except ImportError:
 
 setup(
     name="django-versionfield2",
-    version="0.4",
+    version="0.4.0",
     url='https://github.com/tonioo/django-versionfield',
     license='BSD',
     description="A DB Independent Custom Django Field for storing Version numbers for fast indexing",
-    author='Tom Hoddes',
+    author='Antoine Nguyen',
+    author_email='tonio@ngyn.org',
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
