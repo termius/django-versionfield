@@ -1,6 +1,11 @@
+import six
+
+from django.utils.encoding import python_2_unicode_compatible
+
 from .utils import convert_version_string_to_int, convert_version_int_to_string
 
 
+@python_2_unicode_compatible
 class Version(object):
     def __init__(self, string, number_bits):
         """
@@ -11,15 +16,12 @@ class Version(object):
         self.internal_integer = convert_version_string_to_int(
             string, number_bits)
 
-    def __unicode__(self):
-        return unicode(convert_version_int_to_string(
-                           self.internal_integer, self.number_bits))
-
     def __str__(self):
-        return self.__unicode__()
+        return six.text_type(convert_version_int_to_string(
+                             self.internal_integer, self.number_bits))
 
     def __repr__(self):
-        return self.__unicode__()
+        return self.__str__()
 
     def __int__(self):
         return self.internal_integer
@@ -27,34 +29,34 @@ class Version(object):
     def __eq__(self, other):
         if not other:
             return False  # we are obviously a valid Version, but 'other' isn't
-        if isinstance(other, basestring):
+        if isinstance(other, six.string_types):
             other = Version(other, self.number_bits)
         return int(self) == int(other)
 
     def __lt__(self, other):
         if not other:
             return False
-        if isinstance(other, basestring):
+        if isinstance(other, six.string_types):
             other = Version(other, self.number_bits)
         return int(self) < int(other)
 
     def __le__(self, other):
         if not other:
             return False
-        if isinstance(other, basestring):
+        if isinstance(other, six.string_types):
             other = Version(other, self.number_bits)
         return int(self) <= int(other)
 
     def __gt__(self, other):
         if not other:
             return False
-        if isinstance(other, basestring):
+        if isinstance(other, six.string_types):
             other = Version(other, self.number_bits)
         return int(self) > int(other)
 
     def __ge__(self, other):
         if not other:
             return False
-        if isinstance(other, basestring):
+        if isinstance(other, six.string_types):
             other = Version(other, self.number_bits)
         return int(self) >= int(other)
