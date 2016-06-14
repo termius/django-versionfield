@@ -12,8 +12,7 @@ from .utils import convert_version_int_to_string
 
 
 @python_2_unicode_compatible
-@six.add_metaclass(models.SubfieldBase)
-class VersionField(models.PositiveIntegerField):
+class VersionField(models.Field):
 
     """
     A Field where version numbers are input/output as strings (e.g. 3.0.1)
@@ -26,20 +25,32 @@ class VersionField(models.PositiveIntegerField):
         self.number_bits = number_bits
         super(VersionField, self).__init__(*args, **kwargs)
 
+    def db_type(self, connection):
+        """Use integer as internal representation."""
+        return "integer"
+
     def to_python(self, value):
+        if not value:
+            return None
+
         if isinstance(value, Version):
             return value
 
         if isinstance(value, six.string_types):
             return Version(value, self.number_bits)
 
-        if value is None:
-            return None
-
         return Version(
             convert_version_int_to_string(value, self.number_bits),
             self.number_bits
         )
+
+    def from_db_value(self, value, expression, connection, context):
+        """Convert data from database."""
+        if value is None:
+            return value
+        return Version(
+            convert_version_int_to_string(value, self.number_bits),
+            self.number_bits)
 
     def get_prep_value(self, value):
         if isinstance(value, six.string_types):

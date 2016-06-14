@@ -9,7 +9,7 @@ from .constants import DEFAULT_NUMBER_BITS
 from .utils import convert_version_int_to_string
 
 
-class VersionField(forms.IntegerField):
+class VersionField(forms.CharField):
 
     """A form field dedicated to version numbers."""
 
@@ -18,9 +18,7 @@ class VersionField(forms.IntegerField):
         return super(VersionField, self).__init__(**kwargs)
 
     def to_python(self, value):
-        """
-        Verifies that value can be converted to a Version object
-        """
+        """Verifies that value can be converted to a Version object."""
         if not value:
             return None
 
