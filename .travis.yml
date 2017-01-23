@@ -1,0 +1,14 @@
+sudo: false
+language: python
+python:
+  - "2.7"
+
+before_install:
+  - pip install codecov
+
+script:
+  - cd test_project
+  - coverage run --source ../versionfield manage.py test versionfield 
+
+after_success:
+  - codecov
