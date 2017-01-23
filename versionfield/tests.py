@@ -4,10 +4,12 @@ import unittest
 
 from django.test import TestCase
 from django.db import models
+from django.forms import ValidationError
 
 from . import VersionField
 from .constants import DEFAULT_NUMBER_BITS
 from .version import Version
+from . import forms
 
 
 class DummyModel(models.Model):
@@ -53,6 +55,49 @@ class VersionFieldTest(TestCase):
         except ValueError:
             error_occured = True
         self.assertTrue(error_occured)
+
+    def test_validate_positive(self):
+        field = forms.VersionField()
+        field.check_format("10.11.12")
+
+    def test_validate_too_long(self):
+        error_occured = False
+        correct_error = False
+        field = forms.VersionField()
+        try:
+            field.check_format("10.11.12.13")
+        except ValidationError as e:
+            error_occured = True
+            if e.code == "too_long_version":
+                correct_error = True
+        self.assertTrue(error_occured)
+        self.assertTrue(correct_error)
+
+    def test_validate_not_numeric(self):
+        error_occured = False
+        correct_error = False
+        field = forms.VersionField()
+        try:
+            field.check_format("10.x.1")
+        except ValidationError as e:
+            error_occured = True
+            if e.code == "not_numeric_version":
+                correct_error = True
+        self.assertTrue(error_occured)
+        self.assertTrue(correct_error)
+
+    def test_validate_too_big(self):
+        error_occured = False
+        correct_error = False
+        field = forms.VersionField()
+        try:
+            field.check_format("10.999.1")
+        except ValidationError as e:
+            error_occured = True
+            if e.code == "version_component_too_big":
+                correct_error = True
+        self.assertTrue(error_occured)
+        self.assertTrue(correct_error)
 
 
 class DummyModelCustomBit(models.Model):
