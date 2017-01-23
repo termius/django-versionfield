@@ -1,6 +1,8 @@
 django-versionfield
 ====
 
+[![codecov](https://codecov.io/gh/tonioo/django-versionfield/branch/master/graph/badge.svg)](https://codecov.io/gh/tonioo/django-versionfield)
+
 Usage:
     from versionfield import VersionField
 
@@ -16,6 +18,7 @@ License
 
 django-versionfield is distributed under a BSD-style license.
 
+    Copyright (c) 2014-2017 Antoine Nguyen <tonio@ngyn.org>
     Copyright (c) 2011-2013 MindSnacks (http://mindsnacks.com/)
         
     Permission is hereby granted, free of charge, to any person obtaining a copy
