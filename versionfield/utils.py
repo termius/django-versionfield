@@ -59,6 +59,7 @@ def convert_version_int_to_string(number, number_bits):
         number = number - (number_segment << shift_amount)
     return ".".join(number_strings)
 
+
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
