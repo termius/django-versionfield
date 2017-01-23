@@ -5,7 +5,9 @@ python:
 
 before_install:
   - pip install codecov
-  - python setup.py -q install
+
+install:
+  - python setup.py -q develop
 
 script:
   - cd test_project
