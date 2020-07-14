@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 import six
 
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
+from six import python_2_unicode_compatible
 
 from . import forms
 from .constants import DEFAULT_NUMBER_BITS
@@ -44,7 +44,7 @@ class VersionField(models.Field):
             self.number_bits
         )
 
-    def from_db_value(self, value, expression, connection, context):
+    def from_db_value(self, value, expression, connection):
         """Convert data from database."""
         if value is None:
             return value
